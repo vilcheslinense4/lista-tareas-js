@@ -3,34 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Lista de Tareas</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Gestor de Tareas Pro</title>
+    <style>
+        /* Fondo y base */
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #f4f7f6; 
+            margin: 0; 
+            padding: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        /* BOTÓN VOLVER: Ahora más pequeño y fino */
+        .btn-volver {
+            text-decoration: none;
+            background: #2d3748;
+            color: white;
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            font-size: 0.85rem; 
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            align-self: flex-start;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .btn-volver:hover { background: #4a5568; }
+
+        /* Contenedor principal estilo "App" */
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 380px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        h2 { color: #333; margin-top: 0; font-size: 1.4rem; text-align: center; }
+
+        /* Zona de entrada */
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        #botonAñadir {
+            padding: 10px 15px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Lista de tareas */
+        ul { list-style: none; padding: 0; }
+
+        li {
+            background: #fff;
+            margin-bottom: 8px;
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eee;
+            transition: 0.2s;
+        }
+
+        li:hover { transform: scale(1.02); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+
+        .btn-borrar {
+            background: #ffeded;
+            color: #e53e3e;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Botón para volver al portafolios principal -->
-    <a href="https://vilcheslinense4.github.io/Mi-primer-portafolios/" style="
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #2d3748;
-        color: white;
-        text-decoration: none;
-        border-radius: 30px;
-        margin: 20px;
-        font-family: sans-serif;
-        font-weight: bold;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    ">⬅ Volver al Portafolios</a>
+    <!-- El botón pequeño -->
+    <a href="https://vilcheslinense4.github.io/Mi-primer-portafolios/" class="btn-volver">⬅ Volver</a>
 
-    <div class="contenedor">
-        <h2>Mi Lista de Tareas</h2>
+    <div class="card">
+        <h2>📝 Mis Tareas</h2>
         <div class="input-group">
-            <input type="text" id="tareaInput" placeholder="Ej: Aprender JavaScript...">
+            <input type="text" id="tareaInput" placeholder="Nueva tarea...">
             <button id="botonAñadir">Añadir</button>
         </div>
         <ul id="listaTareas"></ul>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const input = document.getElementById('tareaInput');
+        const boton = document.getElementById('botonAñadir');
+        const lista = document.getElementById('listaTareas');
+
+        boton.onclick = function() {
+            if (input.value.trim() !== "") {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${input.value}</span>
+                    <button class="btn-borrar" onclick="this.parentElement.remove()">Eliminar</button>
+                `;
+                lista.appendChild(li);
+                input.value = "";
+            }
+        };
+
+        input.addEventListener("keypress", (e) => { if(e.key === "Enter") boton.click(); });
+    </script>
 </body>
 </html>
